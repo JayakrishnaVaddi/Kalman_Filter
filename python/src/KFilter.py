@@ -45,7 +45,7 @@ class KF:
         K = self.P.dot(H.T).dot(np.linalg.inv(Sh))
 
         new_x = self.x + K.dot(Y)
-        new_p = np.eye(2) - K.dot(H).dot(self.P)
+        new_p = (np.eye(2) - K.dot(H)).dot(self.P)
 
         self.x = new_x
         self.P = new_p
