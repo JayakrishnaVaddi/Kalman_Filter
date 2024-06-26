@@ -12,7 +12,7 @@ def main():
     v_real = 0.9
     meas_varience = 0.01
 
-    kf = KF(initial_x = 0.0, initial_v= 2.5 , accel_variance= 0.1)
+    kf = KF(initial_x = 0.0, initial_v= 2.5 , accelVariance= 0.01)
 
     DT = 0.1
     STEPS = 1000
@@ -27,7 +27,7 @@ def main():
         x_real = x_real+DT*v_real
         kf.raw_estimate(dt = DT)
         if step != 0 and step % MEASUREMENT_STEPS == 0:
-            kf.update_estimates(meas_value=x_real+np.random.randn()* np.sqrt(meas_varience), meas_variance=meas_varience)
+            kf.update_estimates(meas_position=x_real+np.random.randn()* np.sqrt(meas_varience), meas_variance=meas_varience)
 
     plt.subplot(2, 1, 1)
     plt.title("Position")

@@ -10,7 +10,7 @@ private:
     vector state_values;
     matrix covariences;
 
-    int accelVariance;
+    double accelVariance;
 
 public:
     KFilter(double initial_x, double initial_v, double accelVariance);

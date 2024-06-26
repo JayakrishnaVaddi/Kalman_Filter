@@ -9,7 +9,7 @@ class Test_KFilter(unittest.TestCase):
         x = 0.3
         v = 0.5
         a_v = 1.2
-        kf = KF(x, v, a_v)
+        kf = KF(initial_x= x, initial_v=v, accelVariance=a_v)
 
         self.assertAlmostEqual(x, kf.position)
         self.assertAlmostEqual(v , kf.velocity)
@@ -19,8 +19,7 @@ class Test_KFilter(unittest.TestCase):
         x = 0.3
         v = 0.5
         a_v = 1.2
-        kf = KF(x, v, a_v)
-
+        kf = KF(initial_x= x, initial_v=v, accelVariance=a_v)
         kf.raw_estimate(dt = 0.1)
 
     def test_raw_estimate_matrix_shape(self):
@@ -28,7 +27,7 @@ class Test_KFilter(unittest.TestCase):
         x = 0.3
         v = 0.5
         a_v = 1.2
-        kf = KF(x, v, a_v)
+        kf = KF(initial_x= x, initial_v=v, accelVariance=a_v)
 
         self.assertEqual(kf.cov.shape, (2, 2))
         self.assertEqual(kf.mean.shape, (2, ))
@@ -38,7 +37,7 @@ class Test_KFilter(unittest.TestCase):
         x = 0.3
         v = 2.5
         a_v = 1.2
-        kf = KF(x, v, a_v)
+        kf = KF(initial_x= x, initial_v=v, accelVariance=a_v)
 
 
         for i in range(10):
@@ -54,10 +53,10 @@ class Test_KFilter(unittest.TestCase):
         v = 0.5
         a_v = 1.2
 
-        kf = KF(x, v, a_v)
+        kf = KF(initial_x= x, initial_v=v, accelVariance=a_v)
 
         kf.raw_estimate(dt = 0.1)
-        kf.update_estimates(0.1 , 0.1)
+        kf.update_estimates(meas_position=0.1 , meas_variance=0.1)
 
     def test_state_decrease_uncertainingy(self):
 
@@ -65,11 +64,11 @@ class Test_KFilter(unittest.TestCase):
         v = 2.5
         a_v = 1.2
 
-        kf = KF(x, v, a_v)
+        kf = KF(initial_x= x, initial_v=v, accelVariance=a_v)
 
 
         det_before = np.linalg.det(kf.cov)
-        kf.update_estimates(0.1 , 0.01)
+        kf.update_estimates(meas_position=0.1 , meas_variance=0.01)
         det_after = np.linalg.det(kf.cov)
         
         self.assertLess(det_after, det_before)
@@ -80,8 +79,8 @@ class Test_KFilter(unittest.TestCase):
         v = 2.5
         a_v = 1.2
 
-        kf = KF(x, v, a_v)
-        kf.update_estimates(0.1 , 0.01)
+        kf = KF(initial_x= x, initial_v=v, accelVariance=a_v)
+        kf.update_estimates(meas_position=0.1 , meas_variance=0.01)
 
         self.assertEqual(kf.cov.shape , (2, 2))
         self.assertEqual(kf.mean.shape, (2, ))
