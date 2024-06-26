@@ -1,1 +1,3 @@
 python/src/__pycache__/
+Cpp/build/
+Cpp/libraries/pybind11
